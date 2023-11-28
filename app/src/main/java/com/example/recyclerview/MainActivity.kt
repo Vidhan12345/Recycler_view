@@ -3,6 +3,7 @@ package com.example.recyclerview
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Adapter
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerview.databinding.ActivityMainBinding
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         var ageArray = arrayOf(19,17,19)
         var secArray = arrayOf("R","S","A")
 
+        myrv = binding.rv
         myrv.layoutManager = LinearLayoutManager(this)
         userDetails = arrayListOf<UserModel>()
 
@@ -36,7 +38,14 @@ class MainActivity : AppCompatActivity() {
             userDetails.add(details)
         }
 
-        binding.rv.adapter = MyAdapter(userDetails,this)
+        var myAdapter = MyAdapter(userDetails,this)
+        binding.rv.adapter = myAdapter
+        myAdapter.setOnItemClickListener(object : MyAdapter.onItemClickListener{
+            override fun onItemClicking(position: Int) {
+                Toast.makeText(this@MainActivity, "Item Clicked", Toast.LENGTH_LONG).show()
+            }
+
+        })
 
     }
 }
